@@ -54,8 +54,8 @@ public class ProyectoAscensor {
         double a = 0;
         int tiempoEntreLlegadas;
         int numeroPersonas = 0;
-        double lambdaPrimerPiso = 0.0025;
-        double lambdaPisoUnoASeis = 0.002;
+        double lambdaPrimerPiso = 0.04;
+        double lambdaPisoUnoASeis = 0.02;
         // Math.random() retorna por defecto un valor entre 1 y 0 con una distribucion 
         // uniforme.
         double r = Math.random();
@@ -95,9 +95,8 @@ public class ProyectoAscensor {
         int tiempo = p.generarTiempoLlegada();
         int piso = p.generarPiso(1);
 
-        System.out.println("Tiempo: " + tiempo);
-        System.out.println("Piso: " + piso);
-
+        System.out.println("Tiempo de llegada: " + tiempo);
+        System.out.println("Piso de destino: " + piso);
     }
 
 }
