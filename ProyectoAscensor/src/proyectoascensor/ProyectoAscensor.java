@@ -45,10 +45,12 @@ public class ProyectoAscensor {
         return null;
     }
 
-    public void inicializarAscensor() {
+    public void inicializarAscensor(int capacidadAsc, int tiempoArranque, int tiempoDesplEntrePisos, int pisoAsc, int estadoAsc) {
 
     }
-
+    
+    public void mostrarResultados(){}
+    
     public int generarTiempoLlegada() {
 
         double a = 0;
@@ -84,19 +86,23 @@ public class ProyectoAscensor {
             aleatorio = (int) Math.floor(Math.random() * 9);
             piso = arregloPisos[aleatorio];
         }
-
+        
         return piso;
 
+    }
+    
+    public void ejecutarSimulacion(){
+        int tiempo = generarTiempoLlegada();
+        int piso = generarPiso(pisoAsc);
+
+        System.out.println("Tiempo: " + tiempo);
+        System.out.println("Piso: " + piso);
     }
 
     public static void main(String[] args) {
         // TODO code application logic here
         ProyectoAscensor p = new ProyectoAscensor();
-        int tiempo = p.generarTiempoLlegada();
-        int piso = p.generarPiso(1);
-
-        System.out.println("Tiempo de llegada: " + tiempo);
-        System.out.println("Piso de destino: " + piso);
+        p.ejecutarSimulacion();
     }
 
 }
