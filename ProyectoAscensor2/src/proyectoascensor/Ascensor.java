@@ -22,11 +22,11 @@ public class Ascensor {
     private ArrayList colaSalidaP5;
     private ArrayList colaSalidaP6;
     
-    public Ascensor (int pisoAs) {
+    public Ascensor (int pisoAsc) {
         capacidadOcupada = 0; // numero de personas dentro del ascensor
         estadoAsc = "Parado";
         dirAsc = "Arriba";
-        pisoAsc = pisoAs;
+        this.pisoAsc = pisoAsc;
     }
     
     public int getPisoAsc() {
@@ -35,6 +35,5 @@ public class Ascensor {
     
     private void siguientePiso () {
         
-    }
-    
+    } 
 }

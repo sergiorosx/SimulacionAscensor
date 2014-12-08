@@ -1,5 +1,7 @@
 package proyectoascensor;
 
+import java.util.ArrayList;
+
 /**
  * @author Felipe Murillo
  * @author Esteban Llanos
@@ -17,14 +19,16 @@ public class Lef {
         // configuracion del escenario
         setEscenario(escenario);
         
+        ArrayList<ArrayList> LEF = new ArrayList<>();
+        
         // variables de desempeño
-        double[] tiempoPromEsperaxpiso = {0, 0, 0, 0, 0, 0};
+        double[] tiempoPromEsperaxPiso = {0, 0, 0, 0, 0, 0};
         double tiempoPromEspera = 0.0;
-        double[] tiempoPromEsperaColaEntradaSubidaxpiso = {0, 0, 0, 0, 0}; // piso 1 al 5
-        double[] tiempoPromEsperaColaEntradaBajadaxpiso = {0, 0, 0, 0, 0}; // piso 2 al 6
+        double[] tiempoPromEsperaColaEntradaSubidaxPiso = {0, 0, 0, 0, 0}; // piso 1 al 5
+        double[] tiempoPromEsperaColaEntradaBajadaxPiso = {0, 0, 0, 0, 0}; // piso 2 al 6
         double tiempoPromEsperaColaEntradaTotal = 0;
-        double[] tiempoPromEsperaColaSalidaxpiso = {0, 0, 0, 0, 0, 0}; // piso 1 al 6
-        double tiempopromEsperaColaSalidaTotal = 0;
+        double[] tiempoPromEsperaColaSalidaxPiso = {0, 0, 0, 0, 0, 0}; // piso 1 al 6
+        double tiempoPromEsperaColaSalidaTotal = 0;
         double porcPersonasAtendidas = 0;
         int capacidadOcupadaProm = 0;
         
@@ -38,13 +42,36 @@ public class Lef {
         int reloj = 0;
         
         // inicializar LEF
-        generarTiempoEntreLlegadas(evtAscensor.getPisoAsc());
+        
+        
         
         /******* SIMULACION *******/
         
         
         
         /******* RESULTADOS *******/
+    }
+    
+    public ArrayList crearPersonas(int pisoAsc){
+        
+        int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
+        ArrayList eventoPersona = new ArrayList<>();
+        Persona persona = new Persona();
+        int pisoDestino = persona.generarPiso();
+        
+        eventoPersona.add("LlegadaPersona");
+        eventoPersona.add(tiempoLlegada);
+        eventoPersona.add(pisoDestino);
+        
+        return eventoPersona;
+    }
+    
+    public ArrayList<ArrayList> crearAscensor(int pisoAsc){
+        
+        int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
+        ArrayList eventoPersona = new ArrayList<>();
+        
+        return null;
     }
     
     private void setEscenario(String escenario) {

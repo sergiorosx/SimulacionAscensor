@@ -13,7 +13,7 @@ public class Persona {
     private int horaLlegada;
     
     
-    public void generarPiso () {
+    public int generarPiso () {
         
         int[] pisosDestino = {1, 1, 1, 1, 2, 3, 4, 5, 6};
         int pisoDest;
@@ -24,14 +24,16 @@ public class Persona {
         
         setPisoDestino(pisoDest);
         setDirDestino();
+        
+        return pisoDest;
     }
     
     private void setDirDestino() {
         if (pisoInicial > pisoDestino) {
-            dirDestino = "abajo";
+            dirDestino = "Abajo";
         }
         else {
-            dirDestino = "arriba";
+            dirDestino = "Arriba";
         }
     }
 
