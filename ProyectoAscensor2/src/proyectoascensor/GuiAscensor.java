@@ -211,7 +211,7 @@ public class GuiAscensor extends javax.swing.JFrame {
         int tiempoSimulacion = Integer.parseInt(jTFtiemposimulacion.getText());
         
         if (tiempoSimulacion <= 100000) {
-            LEF.iniciarSimulacion((String) jCBescenario.getSelectedItem(), (int) jCBpisoascensor.getSelectedItem(), tiempoSimulacion);
+            LEF.iniciarSimulacion((String) jCBescenario.getSelectedItem(), Integer.parseInt(jCBpisoascensor.getSelectedItem() + ""), tiempoSimulacion);
         }
         else {
             // bla bla
