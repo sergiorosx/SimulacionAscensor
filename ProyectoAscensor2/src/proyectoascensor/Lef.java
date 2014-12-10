@@ -33,7 +33,6 @@ public class Lef {
         int capacidadOcupadaProm = 0;
         
         // Inicializar ascensor
-        Ascensor evtAscensor = new Ascensor(pisoAscensor);
         
         // tiempo de simulacion maximo
         int tiempoSimulacion = tiempoParada;
@@ -52,7 +51,7 @@ public class Lef {
         /******* RESULTADOS *******/
     }
     
-    public ArrayList crearPersonas(int pisoAsc){
+    public ArrayList crearPersona(int pisoAsc){
         
         int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
         ArrayList eventoPersona = new ArrayList<>();
@@ -61,17 +60,19 @@ public class Lef {
         
         eventoPersona.add("LlegadaPersona");
         eventoPersona.add(tiempoLlegada);
-        eventoPersona.add(pisoDestino);
         
         return eventoPersona;
     }
     
-    public ArrayList<ArrayList> crearAscensor(int pisoAsc){
+    public ArrayList<ArrayList> crearAscensor(int pisoActualAsc, int pisoDestinoAsc){
         
-        int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
-        ArrayList eventoPersona = new ArrayList<>();
+        ArrayList eventoAscensor = new ArrayList<>();
+        Ascensor ascensor = new Ascensor(pisoActualAsc, pisoDestinoAsc, capacidadAsc, tiempoArranque, despEntrePisos);
         
-        return null;
+        eventoAscensor.add("LlegadaAscensor");
+        eventoAscensor.add(ascensor.getTiempoLlegada());
+        
+        return eventoAscensor;
     }
     
     private void setEscenario(String escenario) {
