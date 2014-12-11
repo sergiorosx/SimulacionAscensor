@@ -41,7 +41,7 @@ public class Ascensor {
         return pisoAsc;
     }
     
-    public int getTiempoLlegada () {
+    public int getTiempoLlegada (int cantidadAscensos, int cantidadDescensos) {
         
         int tiempoRecorrido;
         
@@ -53,7 +53,7 @@ public class Ascensor {
             dirAsc = "Abajo";
         }
         
-        tiempoRecorrido = tiempoDesplazamiento;
+        tiempoRecorrido = tiempoDesplazamiento*Math.abs(pisoAsc-pisoDestino) + tiempoArranque + cantidadAscensos + cantidadDescensos;
         
         return tiempoRecorrido;
     } 

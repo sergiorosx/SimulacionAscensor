@@ -51,7 +51,7 @@ public class Lef {
         /******* RESULTADOS *******/
     }
     
-    public ArrayList crearPersona(int pisoAsc){
+    public ArrayList crearEventoPersona(int pisoAsc){
         
         int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
         ArrayList eventoPersona = new ArrayList<>();
@@ -64,13 +64,13 @@ public class Lef {
         return eventoPersona;
     }
     
-    public ArrayList<ArrayList> crearAscensor(int pisoActualAsc, int pisoDestinoAsc){
+    public ArrayList<ArrayList> crearEventoAscensor(int pisoActualAsc, int pisoDestinoAsc, int cantidadAscensos, int cantidadDescensos){
         
         ArrayList eventoAscensor = new ArrayList<>();
         Ascensor ascensor = new Ascensor(pisoActualAsc, pisoDestinoAsc, capacidadAsc, tiempoArranque, despEntrePisos);
         
         eventoAscensor.add("LlegadaAscensor");
-        eventoAscensor.add(ascensor.getTiempoLlegada());
+        eventoAscensor.add(ascensor.getTiempoLlegada(cantidadAscensos, cantidadDescensos));
         
         return eventoAscensor;
     }
