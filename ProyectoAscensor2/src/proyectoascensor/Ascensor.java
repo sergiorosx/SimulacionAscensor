@@ -11,8 +11,7 @@ public class Ascensor {
     
     // variables de estado del ascensor
     private int capacidadOcupada;
-    private String estadoAsc;
-    private String dirAsc;
+    public String dirAsc;
     private int pisoAsc;
     private int pisoDestino;
     private int capacidad;
@@ -28,7 +27,6 @@ public class Ascensor {
     
     public Ascensor (int pisoActualAsc, int pisoDestinoAsc, int capacidad, int tiempoArranque, int tiempoDesplazamiento) {
         capacidadOcupada = 0; // numero de personas dentro del ascensor
-        estadoAsc = "Parado";
         dirAsc = "Arriba";
         pisoAsc = pisoActualAsc;
         pisoDestino = pisoDestinoAsc;
@@ -44,9 +42,7 @@ public class Ascensor {
     public int getTiempoLlegada (int cantidadAscensos, int cantidadDescensos) {
         
         int tiempoRecorrido;
-        
-        estadoAsc = "En Movimiento";
-        
+                
         if (pisoAsc < pisoDestino) {
             dirAsc = "Arriba";            
         }else{

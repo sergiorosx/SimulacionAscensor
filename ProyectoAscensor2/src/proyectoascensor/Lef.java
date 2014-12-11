@@ -13,13 +13,27 @@ public class Lef {
     private int capacidadAsc;
     private int tiempoArranque;
     private int despEntrePisos;
+    private String estadoAscensor;
+    private String dirAscensor;
     
     public void iniciarSimulacion (String escenario, int pisoAscensor, int tiempoParada) {
         /******  INICIALIZAR   ******/
         // configuracion del escenario
         setEscenario(escenario);
+        estadoAscensor = "Parado";
+        dirAscensor = "Arriba";
         
         ArrayList<ArrayList> LEF = new ArrayList<>();
+        
+        ArrayList personasIniciales = new ArrayList();
+        int[] colaEsperaxPiso = {0, 0, 0, 0, 0, 0};
+        
+        for (int i = 0; i < 5; i++) {
+            personasIniciales.add("LlegadaPersona");
+            personasIniciales.add(0);
+            LEF.add(personasIniciales);
+            colaEsperaxPiso[i] = 1;
+        }
         
         // variables de desempeño
         double[] tiempoPromEsperaxPiso = {0, 0, 0, 0, 0, 0};
@@ -53,6 +67,8 @@ public class Lef {
     
     public ArrayList crearEventoPersona(int pisoAsc){
         
+        estadoAscensor = "En Movimiento";
+        
         int tiempoLlegada = generarTiempoEntreLlegadas(pisoAsc);
         ArrayList eventoPersona = new ArrayList<>();
         Persona persona = new Persona();
@@ -66,11 +82,15 @@ public class Lef {
     
     public ArrayList<ArrayList> crearEventoAscensor(int pisoActualAsc, int pisoDestinoAsc, int cantidadAscensos, int cantidadDescensos){
         
+        estadoAscensor = "Parado";
+        
         ArrayList eventoAscensor = new ArrayList<>();
         Ascensor ascensor = new Ascensor(pisoActualAsc, pisoDestinoAsc, capacidadAsc, tiempoArranque, despEntrePisos);
         
         eventoAscensor.add("LlegadaAscensor");
         eventoAscensor.add(ascensor.getTiempoLlegada(cantidadAscensos, cantidadDescensos));
+        
+        dirAscensor = ascensor.dirAsc;
         
         return eventoAscensor;
     }
