@@ -63,7 +63,7 @@ public class Lef {
         /******* RESULTADOS *******/
     }
     
-    private static ArrayList<ArrayList> ordenarLefMergeSort(ArrayList<ArrayList> lef) {
+    private ArrayList<ArrayList> ordenarLefMergeSort(ArrayList<ArrayList> lef) {
         // Caso base. Un arreglo de cero o un elemento ya esta ordenado,
         // asi que lo regresamos.
         if (lef.size() <= 1) {
