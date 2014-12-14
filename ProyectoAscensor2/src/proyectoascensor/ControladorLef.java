@@ -1,42 +1,38 @@
 package proyectoascensor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Felipe Murillo
  * @author Esteban Llanos
  * @author Sergio Garcia 
  */
-public class Lef {
+public class ControladorLef {
     
-    // variables del escenario
+    // variables del escenario, para el ascensor
     private int capacidadAsc;
     private int tiempoArranque;
     private int despEntrePisos;
-    private String estadoAscensor;
-    private String dirAscensor;
+    // lista de enventos futuros
+    private ArrayList<Evento> LEF;
+    /*private String estadoAscensor;
+    private String dirAscensor;*/
     
     public void iniciarSimulacion (String escenario, int pisoAscensor, int tiempoParada) {
         /******  INICIALIZAR   ******/
         // configuracion del escenario
         setEscenario(escenario);
-        estadoAscensor = "Parado";
-        dirAscensor = "Arriba";
+        // inicializacion del evento ascensor
+        Ascensor evtAscensor = new Ascensor(pisoAscensor, capacidadAsc, tiempoArranque, despEntrePisos);
+        // evento persona
+        Persona evtPersona;
         
-        ArrayList<ArrayList> LEF = new ArrayList<>();
-        
-        ArrayList personasIniciales = new ArrayList();
-        int[] colaEsperaxPiso = {0, 0, 0, 0, 0, 0};
-        
-        for (int i = 0; i < 5; i++) {
-            personasIniciales.add("LlegadaPersona");
-            personasIniciales.add(0);
-            LEF.add(personasIniciales);
-            colaEsperaxPiso[i] = 1;
-        }
+        // lista de eventos futuros
+        LEF = new ArrayList<>();
         
         // variables de desempeño
-        double[] tiempoPromEsperaxPiso = {0, 0, 0, 0, 0, 0};
+        /*double[] tiempoPromEsperaxPiso = {0, 0, 0, 0, 0, 0};
         double tiempoPromEspera = 0.0;
         double[] tiempoPromEsperaColaEntradaSubidaxPiso = {0, 0, 0, 0, 0}; // piso 1 al 5
         double[] tiempoPromEsperaColaEntradaBajadaxPiso = {0, 0, 0, 0, 0}; // piso 2 al 6
@@ -44,9 +40,7 @@ public class Lef {
         double[] tiempoPromEsperaColaSalidaxPiso = {0, 0, 0, 0, 0, 0}; // piso 1 al 6
         double tiempoPromEsperaColaSalidaTotal = 0;
         double porcPersonasAtendidas = 0;
-        int capacidadOcupadaProm = 0;
-        
-        // Inicializar ascensor
+        int capacidadOcupadaProm = 0;*/
         
         // tiempo de simulacion maximo
         int tiempoSimulacion = tiempoParada;
@@ -54,17 +48,50 @@ public class Lef {
         // reloj del sistema
         int reloj = 0;
         
-        // inicializar LEF
-        
-        
-        
         /******* SIMULACION *******/
         
+        // inicializar LEF
+        // generacion inicial de personas en todos los pisos
+        for (int pisoIni = 1; pisoIni <= 6; pisoIni++) {
+            evtPersona = new Persona(pisoIni); // horaLlegada, pisoInicial
+            insertar(evtPersona, "P", 0); // info evento, tipo evento, horaLlegada
+        }
         
+        // agrega evento ascensor al LEF
+        insertar(evtAscensor, "A", 0); // info evento, tipo evento, hora llegada
+        
+        // ejecutar simulacion
+        do {
+            // si el LEF queda vacio se aborta la simulacion (condicion provisional)
+            if (!LEF.isEmpty()) {
+                // se extrae el evento futuro del LEF
+                Evento evento = LEF.remove(0);
+                // evento llegada de persona
+                if (evento.getTipoEvt().equals("P")) {
+                    evtPersona = (Persona) evento.getEvtObject();
+                    System.out.println("P " + evento.getHoraLl());
+                    //evtPersona.ejecutar();
+                    
+                }
+                // evento llegada de ascensor a un piso
+                else {
+                    evtAscensor = (Ascensor) evento.getEvtObject();
+                    System.out.println("A " + evento.getHoraLl());
+                    //evtAscensor.ejecutar();
+                }
+            }
+            else {
+                System.out.println("algo no anda bien");
+                break;
+            }
+            reloj++;
+        } while (reloj != tiempoSimulacion);
+        
+        System.out.println("end simulation");
         
         /******* RESULTADOS *******/
     }
-    
+    /*
     public ArrayList crearEventoPersona(int pisoAsc){
         
         estadoAscensor = "En Movimiento";
@@ -94,7 +121,7 @@ public class Lef {
         
         return eventoAscensor;
     }
-    
+    */
     private void setEscenario(String escenario) {
         switch (escenario) {
             case "Escenario 1":
@@ -133,5 +160,16 @@ public class Lef {
             a = -(1 / lambda2) * Math.log(Math.random());
             return (int) a;
         }
+    }
+    
+    // inserta en el left un objeto evento que contiene informacion del tipo 
+    // de evento persona o ascensor, el tipo de evento P o A y la hora de ejecucion del evento
+    public void insertar(Object o, String tipoEvt, int horaLl) {
+        // se crea el evento con la informacion, tipo y hora de generacion
+        Evento e = new Evento(o, tipoEvt, horaLl);
+        // se agrega al LEF
+        LEF.add(e);
+        // se ordena el LEF teniendo en cuenta la horaLl
+        Collections.sort(LEF, new Comparador());
     }
 }

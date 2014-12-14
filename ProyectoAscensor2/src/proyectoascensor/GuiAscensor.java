@@ -7,7 +7,7 @@ package proyectoascensor;
  */
 public class GuiAscensor extends javax.swing.JFrame {
 
-    Lef LEF = new Lef();
+    ControladorLef LEF = new ControladorLef();
 
     /**
      * Creates new form GuiAscensor
