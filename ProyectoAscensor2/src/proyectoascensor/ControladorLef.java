@@ -69,14 +69,14 @@ public class ControladorLef {
                 // evento llegada de persona
                 if (evento.getTipoEvt().equals("P")) {
                     evtPersona = (Persona) evento.getEvtObject();
-                    System.out.println("P " + evento.getHoraLl());
-                    //evtPersona.ejecutar();
-                    
+                    //System.out.println("P " + evento.getHoraLl());
+                    evtPersona.ejecutar();
+                    evtAscensor.addColaEntrada(evtPersona);
                 }
                 // evento llegada de ascensor a un piso
                 else {
                     evtAscensor = (Ascensor) evento.getEvtObject();
-                    System.out.println("A " + evento.getHoraLl());
+                    //System.out.println("A " + evento.getHoraLl());
                     //evtAscensor.ejecutar();
                 }
             }

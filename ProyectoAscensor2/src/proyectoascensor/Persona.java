@@ -20,7 +20,11 @@ public class Persona {
         return pisoInicial;
     }
     
-    public int generarPiso() {
+    public String getDirDestino() {
+        return dirDestino;
+    }
+    
+    private void generarPiso() {
         
         int[] pisosDestino = {1, 2, 3, 1, 4, 5, 1, 6, 1};
 
@@ -28,21 +32,18 @@ public class Persona {
             pisoDestino = pisosDestino[(int) Math.floor(Math.random() * 9)];
         } while (pisoDestino == pisoInicial);
         
-        setDirDestino();
-        
-        return pisoDestino;
     }
     
     private void setDirDestino() {
-        if (pisoInicial > pisoDestino) {
+        if (pisoInicial > pisoDestino)
             dirDestino = "Abajo";
-        }
-        else {
+        else
             dirDestino = "Arriba";
-        }
     }
 
     public void ejecutar() {
-        
+        generarPiso();
+        setDirDestino();
     }
+    
 }
