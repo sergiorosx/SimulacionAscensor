@@ -53,7 +53,7 @@ public class ControladorLef {
         // inicializar LEF
         // generacion inicial de personas en todos los pisos
         for (int pisoIni = 1; pisoIni <= 6; pisoIni++) {
-            evtPersona = new Persona(pisoIni); // horaLlegada, pisoInicial
+            evtPersona = new Persona(pisoIni); // pisoInicial
             insertar(evtPersona, "P", 0); // info evento, tipo evento, horaLlegada
         }
         
