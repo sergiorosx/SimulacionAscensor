@@ -7,38 +7,43 @@ package proyectoascensor;
  */
 public class Persona {
     
-    private int pisoInicial;
+    private final int pisoInicial;
     private int pisoDestino;
     private String dirDestino;
-    private int horaLlegada;
     
     
-    public int generarPiso () {
+    public Persona (int pisoIni) {
+        pisoInicial = pisoIni;
+    }
+    
+    public int getPisoInicial() {
+        return pisoInicial;
+    }
+    
+    public String getDirDestino() {
+        return dirDestino;
+    }
+    
+    private void generarPiso() {
         
-        int[] pisosDestino = {1, 1, 1, 1, 2, 3, 4, 5, 6};
-        int pisoDest;
+        int[] pisosDestino = {1, 2, 3, 1, 4, 5, 1, 6, 1};
 
         do {
-            pisoDest = pisosDestino[(int) Math.floor(Math.random() * 9)];
-        } while (pisoDest == pisoInicial);
+            pisoDestino = pisosDestino[(int) Math.floor(Math.random() * 9)];
+        } while (pisoDestino == pisoInicial);
         
-        setPisoDestino(pisoDest);
-        setDirDestino();
-        
-        return pisoDest;
     }
     
     private void setDirDestino() {
-        if (pisoInicial > pisoDestino) {
+        if (pisoInicial > pisoDestino)
             dirDestino = "Abajo";
-        }
-        else {
+        else
             dirDestino = "Arriba";
-        }
     }
 
-    private void setPisoDestino(int pisoDest) {
-        pisoDestino = pisoDest;
+    public void ejecutar() {
+        generarPiso();
+        setDirDestino();
     }
     
 }
