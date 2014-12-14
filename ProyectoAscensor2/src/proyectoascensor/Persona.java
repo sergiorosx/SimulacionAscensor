@@ -11,8 +11,6 @@ public class Persona {
     private int pisoDestino;
     private String dirDestino;
     
-    /*public Persona(){
-    }*/
     
     public Persona (int pisoIni) {
         pisoInicial = pisoIni;
