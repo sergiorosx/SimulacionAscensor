@@ -102,7 +102,7 @@ public class Ascensor {
             dirAscensor = "Arriba";
         // 2. verificar si el ascensor debe detenerse o no
         // si el el ascensor no esta vacio y las colas de entrada no estan vacias, entonces...
-        if (capacidadOcupada != 0 && !colasEntradaVacias()){
+        if (capacidadOcupada != 0 || !colasEntradaVacias()){
             // ascensor se pone en marcha o sigue en marcha
             estadoAscensor = "En marcha";
             // 3. se verifica si hay alguien que se baje en el piso del ascensor
@@ -136,7 +136,7 @@ public class Ascensor {
 
     public void addColaEntrada(Persona evtPersona) {
         // colas con direccion ascendente
-        if(evtPersona.getDirDestino().equals("arriba")) {
+        if(evtPersona.getDirDestino().equals("Arriba")) {
             // colas para subir a un piso
             switch(evtPersona.getPisoInicial()) {
                 case 1:
@@ -220,7 +220,7 @@ public class Ascensor {
                     capacidadOcupada--;
                     tiempoSalidas++; // debe quedar = 0 cada que finalize ejecutar()
                     atendidos++;
-                } while (colaSalidaP1.isEmpty());
+                } while (!colaSalidaP1.isEmpty());
                 break;
             case 2:
                 do {
@@ -228,7 +228,7 @@ public class Ascensor {
                     capacidadOcupada--;
                     tiempoSalidas++;
                     atendidos++;
-                } while (colaSalidaP2.isEmpty());
+                } while (!colaSalidaP2.isEmpty());
                 break;                
             case 3:
                 do {
@@ -236,7 +236,7 @@ public class Ascensor {
                     capacidadOcupada--;
                     tiempoSalidas++;
                     atendidos++;
-                } while (colaSalidaP3.isEmpty());
+                } while (!colaSalidaP3.isEmpty());
                 break;
             case 4:
                 do {
@@ -244,7 +244,7 @@ public class Ascensor {
                     capacidadOcupada--;
                     tiempoSalidas++;
                     atendidos++;
-                } while (colaSalidaP4.isEmpty());
+                } while (!colaSalidaP4.isEmpty());
                 break;
             case 5: 
                 do {
@@ -252,14 +252,14 @@ public class Ascensor {
                     capacidadOcupada--;
                     tiempoSalidas++;
                     atendidos++;
-                } while (colaSalidaP5.isEmpty());
+                } while (!colaSalidaP5.isEmpty());
                 break;
             case 6: 
                 do {
                     colaSalidaP6.remove(0);
                     capacidadOcupada--;
                     atendidos++;
-                } while (colaSalidaP6.isEmpty());
+                } while (!colaSalidaP6.isEmpty());
                 break;
         }
     }
@@ -277,7 +277,7 @@ public class Ascensor {
                 case 4:
                     return colaEntradaSubeP4.isEmpty();
                 case 5:
-                    return colaEntradaSubeP1.isEmpty();
+                    return colaEntradaSubeP5.isEmpty();
                 default:
                     return false;
             }
@@ -305,15 +305,9 @@ public class Ascensor {
     }
 
     private void subirPersonas(int reloj) {
-        // 5. Ascensor lleno - vacio
-        if (ascensorLleno()) {
-            // ir al siguiente piso
-        }
-        else {
-            if (capacidadOcupada == 0){
-                dirAscensor = getDireccionDestino();
-            }
-        }
+        // 5. Ascensor vacio
+        if (capacidadOcupada == 0)
+            dirAscensor = getDireccionDestino();
         
         //6. de acuerdo a la direccion del ascensor ingresan personas en las colas de entrada
         if ("Arriba".equals(dirAscensor)) { // el ascensor sube
@@ -325,9 +319,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaSubeP1.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 1, "Arriba");
-                        colaSalidaP1.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaSubeP1.isEmpty());
+                    } while(!colaEntradaSubeP1.isEmpty());
                     break;
                 case 2:
                     do {
@@ -336,9 +330,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaSubeP2.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 2, "Arriba");
-                        colaSalidaP2.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaSubeP2.isEmpty());
+                    } while(!colaEntradaSubeP2.isEmpty());
                     break;
                 case 3:
                     do {
@@ -347,9 +341,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaSubeP3.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 3, "Arriba");
-                        colaSalidaP3.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaSubeP3.isEmpty());
+                    } while(!colaEntradaSubeP3.isEmpty());
                     break;
                 case 4:
                     do {
@@ -358,9 +352,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaSubeP4.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 4, "Arriba");
-                        colaSalidaP4.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaSubeP4.isEmpty());
+                    } while(!colaEntradaSubeP4.isEmpty());
                     break;
                 case 5:
                     do {
@@ -369,9 +363,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaSubeP5.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 5, "Arriba");
-                        colaSalidaP5.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaSubeP5.isEmpty());
+                    } while(!colaEntradaSubeP5.isEmpty());
                     break;
             }
         }
@@ -384,9 +378,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaBajaP2.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 2, "Abajo");
-                        colaSalidaP2.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaBajaP2.isEmpty());
+                    } while(!colaEntradaBajaP2.isEmpty());
                     break;
                 case 3:
                     do {
@@ -395,9 +389,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaBajaP3.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 3, "Abajo");
-                        colaSalidaP3.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaBajaP3.isEmpty());
+                    } while(!colaEntradaBajaP3.isEmpty());
                     break;
                 case 4:
                     do {
@@ -406,9 +400,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaBajaP4.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 4, "Abajo");
-                        colaSalidaP4.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaBajaP4.isEmpty());
+                    } while(!colaEntradaBajaP4.isEmpty());
                     break;
                 case 5:
                     do {
@@ -417,9 +411,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaBajaP5.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 5, "Abajo");
-                        colaSalidaP5.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaBajaP5.isEmpty());
+                    } while(!colaEntradaBajaP5.isEmpty());
                     break;
                 case 6:
                     do {
@@ -428,9 +422,9 @@ public class Ascensor {
                         capacidadOcupada++;
                         Persona evtPersona = colaEntradaBajaP6.remove(0);
                         calcularTiempoEspera(reloj - evtPersona.getHoraLlegada(), 6, "Abajo");
-                        colaSalidaP6.add(evtPersona);
+                        addColaSalida(evtPersona);
                         tiempoEntradas++;
-                    } while(colaEntradaBajaP6.isEmpty());
+                    } while(!colaEntradaBajaP6.isEmpty());
                     break;
             }
         }
@@ -447,59 +441,83 @@ public class Ascensor {
                 Persona p = colaEntradaSubeP1.get(0);
                 return p.getDirDestino();
             case 2: // cuando hay personas en las dos colas 
-                p1 = colaEntradaSubeP2.get(0);
-                p2 = colaEntradaBajaP2.get(0);
-                if (p1.equals(null)) // si no hay nadie en la cola de subida
+                if (colaEntradaSubeP2.isEmpty()) // si no hay nadie en la cola de subida
+                {
+                    p2 = colaEntradaBajaP2.get(0);
                     return p2.getDirDestino();
-                else if (p2.equals(null)) // si no hay nadie en la cola de bajada
+                }
+                else if (colaEntradaBajaP2.isEmpty()) // si no hay nadie en la cola de bajada
+                {
+                    p1 = colaEntradaSubeP2.get(0);
                     return p1.getDirDestino();
+                }   
                 else {// si hay dos personas en cada cola se escoge la que halla llegado antes
+                    p1 = colaEntradaSubeP2.get(0);
+                    p2 = colaEntradaBajaP2.get(0);
                     if (p1.getHoraLlegada() < p2.getHoraLlegada())
                         return p1.getDirDestino();
                     else
                         return p2.getDirDestino();
                 }
             case 3:
-                p1 = colaEntradaSubeP3.get(0);
-                p2 = colaEntradaBajaP3.get(0);
-                if (p1.equals(null))
+                if (colaEntradaSubeP3.isEmpty()) // si no hay nadie en la cola de subida
+                {
+                    p2 = colaEntradaBajaP3.get(0);
                     return p2.getDirDestino();
-                else if (p2.equals(null))
+                }
+                else if (colaEntradaBajaP3.isEmpty()) // si no hay nadie en la cola de bajada
+                {
+                    p1 = colaEntradaSubeP3.get(0);
                     return p1.getDirDestino();
-                else {
-                    if (p1.getHoraLlegada() > p2.getHoraLlegada())
+                }   
+                else {// si hay dos personas en cada cola se escoge la que halla llegado antes
+                    p1 = colaEntradaSubeP3.get(0);
+                    p2 = colaEntradaBajaP3.get(0);
+                    if (p1.getHoraLlegada() < p2.getHoraLlegada())
                         return p1.getDirDestino();
                     else
                         return p2.getDirDestino();
                 }
             case 4:
-                p1 = colaEntradaSubeP4.get(0);
-                p2 = colaEntradaBajaP4.get(0);
-                if (p1.equals(null))
+                if (colaEntradaSubeP4.isEmpty()) // si no hay nadie en la cola de subida
+                {
+                    p2 = colaEntradaBajaP4.get(0);
                     return p2.getDirDestino();
-                else if (p2.equals(null))
+                }
+                else if (colaEntradaBajaP4.isEmpty()) // si no hay nadie en la cola de bajada
+                {
+                    p1 = colaEntradaSubeP4.get(0);
                     return p1.getDirDestino();
-                else {
-                    if (p1.getHoraLlegada() > p2.getHoraLlegada())
+                }   
+                else {// si hay dos personas en cada cola se escoge la que halla llegado antes
+                    p1 = colaEntradaSubeP4.get(0);
+                    p2 = colaEntradaBajaP4.get(0);
+                    if (p1.getHoraLlegada() < p2.getHoraLlegada())
                         return p1.getDirDestino();
                     else
                         return p2.getDirDestino();
                 }
             case 5:
-                p1 = colaEntradaSubeP5.get(0);
-                p2 = colaEntradaBajaP5.get(0);
-                if (p1.equals(null))
+                if (colaEntradaSubeP5.isEmpty()) // si no hay nadie en la cola de subida
+                {
+                    p2 = colaEntradaBajaP5.get(0);
                     return p2.getDirDestino();
-                else if (p2.equals(null))
+                }
+                else if (colaEntradaBajaP5.isEmpty()) // si no hay nadie en la cola de bajada
+                {
+                    p1 = colaEntradaSubeP5.get(0);
                     return p1.getDirDestino();
-                else {
-                    if (p1.getHoraLlegada() > p2.getHoraLlegada())
+                }   
+                else {// si hay dos personas en cada cola se escoge la que halla llegado antes
+                    p1 = colaEntradaSubeP5.get(0);
+                    p2 = colaEntradaBajaP5.get(0);
+                    if (p1.getHoraLlegada() < p2.getHoraLlegada())
                         return p1.getDirDestino();
                     else
                         return p2.getDirDestino();
                 }
             case 6:
-                p = colaEntradaBajaP3.get(0);
+                p = colaEntradaBajaP6.get(0);
                 return p.getDirDestino();
             default:
                 return "";
@@ -508,28 +526,28 @@ public class Ascensor {
 
     private void calcularTiempoEspera(int tProm, int pisoAsc, String dirAsc) {
         if("Arriba".equals(dirAsc)) {
-            // tiempo promedio de espera para piso n
+            // tiempo promedio de espera para pisos 1-6
             if (tPromEsperaxPiso[pisoAsc - 1] == 0)
                 tPromEsperaxPiso[pisoAsc - 1] = tProm;
             else
                 tPromEsperaxPiso[pisoAsc - 1] = (tPromEsperaxPiso[pisoAsc - 1] + tProm) /2;
-            // tiempo promedio de espera para piso 1 para subir
+            // tiempo promedio de espera para pisos 1 a 5
             if (tPromEsperaColaEntradaSubexPiso[pisoAsc - 1] == 0)
                 tPromEsperaColaEntradaSubexPiso[pisoAsc - 1] = tProm;
             else
                 tPromEsperaColaEntradaSubexPiso[pisoAsc - 1] = (tPromEsperaColaEntradaSubexPiso[pisoAsc - 1] + tProm) / 2;
         }
         else {
-            // tiempo promedio de espera para piso n
-            if (tPromEsperaxPiso[pisoAsc - 1] == 0)
-                tPromEsperaxPiso[pisoAsc - 1] = tProm;
+            // tiempo promedio de espera para piso 2 6
+            if (tPromEsperaxPiso[pisoAsc - 2] == 0)
+                tPromEsperaxPiso[pisoAsc - 2] = tProm;
             else
-                tPromEsperaxPiso[pisoAsc - 1] = (tPromEsperaxPiso[pisoAsc - 1] + tProm) /2;
-            // tiempo promedio de espera para piso 1 para subir
-            if (tPromEsperaColaEntradaBajaxPiso[pisoAsc - 1] == 0)
-                tPromEsperaColaEntradaBajaxPiso[pisoAsc - 1] = tProm;
+                tPromEsperaxPiso[pisoAsc - 2] = (tPromEsperaxPiso[pisoAsc - 2] + tProm) /2;
+            // tiempo promedio de espera para piso 2 - 6
+            if (tPromEsperaColaEntradaBajaxPiso[pisoAsc - 2] == 0)
+                tPromEsperaColaEntradaBajaxPiso[pisoAsc - 2] = tProm;
             else
-                tPromEsperaColaEntradaBajaxPiso[pisoAsc - 1] = (tPromEsperaColaEntradaBajaxPiso[pisoAsc - 1] + tProm) / 2;
+                tPromEsperaColaEntradaBajaxPiso[pisoAsc - 2] = (tPromEsperaColaEntradaBajaxPiso[pisoAsc - 2] + tProm) / 2;
         }
     }
 
@@ -551,7 +569,35 @@ public class Ascensor {
         tiempoSalidas = 0;
         tiempoEntradas = 0;
         paroAsc = "";
+        generaLlegada = false;
         
         return proxLlegada;
+    }
+
+    private void addColaSalida(Persona evtPersona) {
+        switch(evtPersona.getPisoDestino()) {
+            case 1:
+                colaSalidaP1.add(evtPersona);
+                break;
+            case 2:
+                colaSalidaP2.add(evtPersona);
+                break;
+            case 3:
+                colaSalidaP3.add(evtPersona);
+                break;
+            case 4:
+                colaSalidaP4.add(evtPersona);
+                break;
+            case 5:
+                colaSalidaP5.add(evtPersona);
+                break;
+            case 6:
+                colaSalidaP6.add(evtPersona);
+                break;
+        }
+    }
+    
+    public int getCapacidadOcupada(){
+        return capacidadOcupada;
     }
 }

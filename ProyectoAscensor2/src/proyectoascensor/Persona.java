@@ -22,6 +22,10 @@ public class Persona {
         return pisoInicial;
     }
     
+    public int getPisoDestino() {
+        return pisoDestino;
+    }
+    
     public int getHoraLlegada() {
         return horaLlegada;
     }
