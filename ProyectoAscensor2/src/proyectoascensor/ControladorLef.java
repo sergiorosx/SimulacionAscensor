@@ -17,8 +17,11 @@ public class ControladorLef {
     private int despEntrePisos;
     // lista de enventos futuros
     private ArrayList<Evento> LEF;
+<<<<<<< HEAD
     // variable para actualizar colas del ascensor
     private int cambiosCola;
+=======
+>>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
     
     // MAIN de la simulacion
     public void iniciarSimulacion (String escenario, int pisoAscensor, int tiempoParada) {
@@ -73,10 +76,14 @@ public class ControladorLef {
                     // se ejecuta el evento de la persona
                     evtPersona.ejecutar();
                     // se agrega la persona a la cola del ascensor
+<<<<<<< HEAD
                     Evento eventoAsc = getEvtAscensorLEF(); // se obtiene el evento ascensor del LEF
                     Ascensor ascLEF = (Ascensor) eventoAsc.getEvtObject(); // se extrae los datos del ascensor
                     ascLEF.addColaEntrada(evtPersona); // se modifican las colas
                     actalizarLEF(ascLEF, eventoAsc.getHoraLl()); // se reemplaza el evento anterior con el nuevo
+=======
+                    evtAscensor.addColaEntrada(evtPersona);
+>>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
                 }
                 // evento llegada de ascensor a un piso
                 else {
@@ -163,6 +170,7 @@ public class ControladorLef {
 
     private void mostarLEF() {
         
+<<<<<<< HEAD
         System.out.print("[ ");
         for (Evento e : LEF)
             System.out.print("{" + e.getTipoEvt() + "," + e.getHoraLl() + "} ");
@@ -188,4 +196,11 @@ public class ControladorLef {
         Evento e = new Evento(evtAscensor, "A", horaLlegada);
         LEF.add(cambiosCola, e);
     }
+=======
+        System.out.print("[");
+        for (Evento e : LEF)
+            System.out.print("{"+e.getTipoEvt()+","+e.getHoraLl()+"} ");
+        System.out.println("]");
+    }
+>>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
 }
