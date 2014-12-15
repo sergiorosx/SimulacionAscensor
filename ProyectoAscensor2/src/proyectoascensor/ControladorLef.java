@@ -7,61 +7,61 @@ import java.util.Iterator;
 /**
  * @author Felipe Murillo
  * @author Esteban Llanos
- * @author Sergio Garcia 
+ * @author Sergio Garcia
  */
 public class ControladorLef {
-    
+
     // variables del escenario, para el ascensor
     private int capacidadAsc;
     private int tiempoArranque;
     private int despEntrePisos;
     // lista de enventos futuros
     private ArrayList<Evento> LEF;
-<<<<<<< HEAD
+
     // variable para actualizar colas del ascensor
     private int cambiosCola;
-=======
->>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
-    
+
     // MAIN de la simulacion
-    public void iniciarSimulacion (String escenario, int pisoAscensor, int tiempoParada) {
-        /******  INICIALIZAR   ******/
+    public void iniciarSimulacion(String escenario, int pisoAscensor, int tiempoParada) {
+        /**
+         * **** INICIALIZAR *****
+         */
         // configuracion del escenario
         setEscenario(escenario);
         // inicializacion del evento ascensor
         Ascensor evtAscensor = new Ascensor(pisoAscensor, capacidadAsc, tiempoArranque, despEntrePisos);
         // evento persona
         Persona evtPersona;
-        
+
         // lista de eventos futuros
         LEF = new ArrayList<>();
-        
+
         // variables de desempeño
         /*
-        double tiempoPromEspera = 0.0;
-        double tiempoPromEsperaColaEntradaTotal = 0;
-        double tiempoPromEsperaColaSalidaTotal = 0;
-        double porcPersonasAtendidas = 0;
-        int capacidadOcupadaProm = 0;*/
-        
+         double tiempoPromEspera = 0.0;
+         double tiempoPromEsperaColaEntradaTotal = 0;
+         double tiempoPromEsperaColaSalidaTotal = 0;
+         double porcPersonasAtendidas = 0;
+         int capacidadOcupadaProm = 0;*/
         // tiempo de simulacion maximo
         int tiempoSimulacion = tiempoParada;
-        
+
         // reloj del sistema
         int reloj = 0;
-        
-        /******* SIMULACION *******/
-        
+
+        /**
+         * ***** SIMULACION ******
+         */
         // inicializar LEF
         // generacion inicial de personas en todos los pisos
         for (int pisoIni = 1; pisoIni <= 6; pisoIni++) {
             evtPersona = new Persona(0, pisoIni); // pisoInicial
             insertarLEF(evtPersona, "P", 0); // info evento, tipo evento, horaLlegada
         }
-        
+
         // agrega evento ascensor al LEF
         insertarLEF(evtAscensor, "A", 0); // info evento, tipo evento, hora llegada
-        
+
         // ejecutar simulacion
         do {
             // si el LEF queda vacio se aborta la simulacion (condicion provisional)
@@ -76,23 +76,22 @@ public class ControladorLef {
                     // se ejecuta el evento de la persona
                     evtPersona.ejecutar();
                     // se agrega la persona a la cola del ascensor
-<<<<<<< HEAD
+
                     Evento eventoAsc = getEvtAscensorLEF(); // se obtiene el evento ascensor del LEF
                     Ascensor ascLEF = (Ascensor) eventoAsc.getEvtObject(); // se extrae los datos del ascensor
                     ascLEF.addColaEntrada(evtPersona); // se modifican las colas
                     actalizarLEF(ascLEF, eventoAsc.getHoraLl()); // se reemplaza el evento anterior con el nuevo
-=======
+
                     evtAscensor.addColaEntrada(evtPersona);
->>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
-                }
-                // evento llegada de ascensor a un piso
+
+                } // evento llegada de ascensor a un piso
                 else {
                     evtAscensor = (Ascensor) evento.getEvtObject();
                     //System.out.println("A " + evento.getHoraLl());
                     // se ejecuta el evento del ascensor
                     evtAscensor.ejecutar(reloj);
                     // se genera una llegada de persona si el ascensor para
-                    if (evtAscensor.getGeneraLlegada()){
+                    if (evtAscensor.getGeneraLlegada()) {
                         int tEntreLl = generarTiempoEntreLlegadas(evtAscensor.getPisoAsc());
                         evtPersona = new Persona(tEntreLl + reloj, evtAscensor.getPisoAsc());
                         insertarLEF(evtPersona, "P", tEntreLl + reloj);
@@ -105,16 +104,17 @@ public class ControladorLef {
                 }
                 // se sincroniza el reloj para ejecutar el evento proximo mas cercano
                 reloj += evento.getHoraLl();
-            }
-            else {
+            } else {
                 System.out.println("algo no anda bien");
                 break;
             }
         } while (reloj != tiempoSimulacion);
-        
+
         System.out.println("End simulation");
-        
-        /******* RESULTADOS *******/
+
+        /**
+         * ***** RESULTADOS ******
+         */
     }
 
     private void setEscenario(String escenario) {
@@ -141,8 +141,8 @@ public class ControladorLef {
                 break;
         }
     }
-    
-    private int generarTiempoEntreLlegadas (int pisoAsc) {
+
+    private int generarTiempoEntreLlegadas(int pisoAsc) {
         double a = 0;
         double lambda1 = 0.04; // para el piso 1
         double lambda2 = 0.02; // para los demas pisos
@@ -156,7 +156,7 @@ public class ControladorLef {
             return (int) a;
         }
     }
-    
+
     // inserta en el left un objeto evento que contiene informacion del tipo 
     // de evento persona o ascensor, el tipo de evento P o A y la hora de ejecucion del evento
     public void insertarLEF(Object o, String tipoEvt, int horaLl) {
@@ -169,25 +169,24 @@ public class ControladorLef {
     }
 
     private void mostarLEF() {
-        
-<<<<<<< HEAD
         System.out.print("[ ");
-        for (Evento e : LEF)
+        for (Evento e : LEF) {
             System.out.print("{" + e.getTipoEvt() + "," + e.getHoraLl() + "} ");
+        }
         System.out.println("]");
     }
 
     private Evento getEvtAscensorLEF() {
         Evento e = null;
-        
-        for (int i=0; i < LEF.size(); i++) {
+
+        for (int i = 0; i < LEF.size(); i++) {
             e = LEF.get(i);
             if ("A".equals(e.getTipoEvt())) {
                 cambiosCola = i;
                 break;
             }
         }
-        
+
         return e;
     }
 
@@ -196,11 +195,5 @@ public class ControladorLef {
         Evento e = new Evento(evtAscensor, "A", horaLlegada);
         LEF.add(cambiosCola, e);
     }
-=======
-        System.out.print("[");
-        for (Evento e : LEF)
-            System.out.print("{"+e.getTipoEvt()+","+e.getHoraLl()+"} ");
-        System.out.println("]");
-    }
->>>>>>> 37b33f7c9da39bb9cee70746571ba86b66959e35
+
 }
