@@ -215,74 +215,6 @@ public class GuiAscensor extends javax.swing.JFrame {
         LEF.iniciarSimulacion(jCBescenario.getSelectedItem().toString(), Integer.parseInt(jCBpisoascensor.getSelectedItem().toString()), tiempoSimulacion);
 
     }//GEN-LAST:event_jBiniciarsimulacionActionPerformed
-
-    private static ArrayList<ArrayList> ordenarLefMergeSort(ArrayList<ArrayList> lef) {
-        // Caso base. Un arreglo de cero o un elemento ya esta ordenado,
-        // asi que lo regresamos.
-        if (lef.size() <= 1) {
-            return lef;
-        }
-        int puntoMedio = lef.size() / 2;
-        // Creamos subarreglo izquierdo
-        ArrayList<ArrayList> izquierdo = new ArrayList<ArrayList>();
-        
-        for (int i = 0; i < puntoMedio; i++) {
-            izquierdo.add(lef.get(i));
-        }
-        // Creamos el subarreglo derecho
-        ArrayList<ArrayList> derecho = new ArrayList<ArrayList>();
-        
-        for (int i = 0; i < lef.size() - puntoMedio; i++) {
-            derecho.add(lef.get(puntoMedio + i));
-        }
-        // Ordenamos las dos mitades recursivamente
-        ArrayList<ArrayList> izquierdoOrdenado = ordenarLefMergeSort(izquierdo);
-        ArrayList<ArrayList> derechoOrdenado = ordenarLefMergeSort(derecho);
-        //Mezclamos la solucion---
-        // El indice i es para recorrer el subarreglo izquierdo
-        int i = 0;
-        // El indice j es para recorrer el subarreglo derecho
-        int j = 0;
-        // En 'resultado' guardamos el resultado de la mezcla de los dos
-        // subarreglos
-        ArrayList<ArrayList> resultado = new ArrayList<ArrayList>();
-        /**
-         * Terminamos de mezclar cuando i + j ya recorrieron todos los elementos
-         * de los dos subarreglos
-         */
-        while (i + j < izquierdoOrdenado.size() + derechoOrdenado.size()) {
-            // a) Si i ya llego al ultimo elemento del subarreglo izquierdo
-            // copiamos el valor del siguiente elemento del subarreglo
-            // derecho e incrementamos el indice j para, en el siguiente,
-            // ciclo copiar el elemento de subarreglo derecho que sigue
-            if (i == izquierdoOrdenado.size()) {
-                //resultado
-                resultado.add(i + j, derechoOrdenado.get(j));
-                j++;
-                continue;
-            }
-            // Lo mismo que a) pero para el subarreglo derecho
-            if (j == derechoOrdenado.size()) {
-                resultado.add(i + j, izquierdoOrdenado.get(i));
-                // resultado[i + j] = izquierdoOrdenado[i];
-                i++;
-                continue;
-            }
-            double elementoIzquierdo = (int) izquierdoOrdenado.get(i).get(1);
-            double elementoDerecho = (int) derechoOrdenado.get(j).get(1);
-            // Comparamos cual de los elementos que siguen es menor y ese
-            // lo copiamos en resultado
-            if (elementoIzquierdo <= elementoDerecho) {
-                resultado.add(i + j, izquierdoOrdenado.get(i));
-                //resultado[i + j] = elementoIzquierdo;
-                i++;
-            } else {
-                resultado.add(i + j, derechoOrdenado.get(j));
-                j++;
-            }
-        }
-        return resultado;
-    }
     
     private void jCBescenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBescenarioActionPerformed
         // TODO add your handling code here:
@@ -341,31 +273,7 @@ public class GuiAscensor extends javax.swing.JFrame {
             public void run() {
                 new GuiAscensor().setVisible(true);
             }
-        });
-        
-        ArrayList<ArrayList> LEFPrueba = new ArrayList<ArrayList>();
-        ArrayList persona1 = new ArrayList<>();
-        ArrayList persona2 = new ArrayList<>();
-        
-        persona1.add("LlegadaPersona");
-        persona2.add("LlegadaPersona");
-        
-        persona1.add(25);
-        persona2.add(12);
-        
-        LEFPrueba.add(persona1);
-        LEFPrueba.add(persona2);
-        
-        for(int i = 0 ; i < LEFPrueba.size() ; i++){
-            System.out.println("Elemento: " + i + " Desordenado: " + LEFPrueba.get(i));
-        }
-        
-        LEFPrueba = ordenarLefMergeSort(LEFPrueba);
-        
-        for(int i = 0 ; i < LEFPrueba.size() ; i++){
-            System.out.println("Elemento: " + i + " Ordenado: " + LEFPrueba.get(i));
-        }
-        
+        });  
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
