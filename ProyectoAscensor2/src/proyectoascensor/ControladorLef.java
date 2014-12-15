@@ -90,7 +90,6 @@ public class ControladorLef {
                     }
                 }
                 // se sincroniza el reloj para ejecutar el evento proximo mas cercano
-                evento = LEF.get(0);
                 reloj += evento.getHoraLl();
             }
             else {
