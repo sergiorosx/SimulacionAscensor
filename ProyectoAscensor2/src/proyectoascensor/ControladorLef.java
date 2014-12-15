@@ -60,6 +60,7 @@ public class ControladorLef {
         do {
             // si el LEF queda vacio se aborta la simulacion (condicion provisional)
             if (!LEF.isEmpty()) {
+                mostarLEF();
                 // se extrae el primer evento futuro del LEF
                 Evento evento = LEF.remove(0);
                 // evento llegada de persona
@@ -152,5 +153,13 @@ public class ControladorLef {
         LEF.add(e);
         // se ordena el LEF teniendo en cuenta la horaLl
         Collections.sort(LEF, new Comparador());
+    }
+
+    private void mostarLEF() {
+        
+        System.out.print("[");
+        for (Evento e : LEF)
+            System.out.print("{"+e.getTipoEvt()+","+e.getHoraLl()+"} ");
+        System.out.println("]");
     }
 }
