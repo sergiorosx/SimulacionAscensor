@@ -47,6 +47,7 @@ public class GuiAscensor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Andalus", 0, 24)); // NOI18N
         jLabel1.setText("SIMULACION ASCENSOR");
 
+        jTAresultados.setEditable(false);
         jTAresultados.setColumns(20);
         jTAresultados.setRows(5);
         jScrollPane1.setViewportView(jTAresultados);
@@ -203,7 +204,8 @@ public class GuiAscensor extends javax.swing.JFrame {
         int tiempoSimulacion = Integer.parseInt(jTFtiemposimulacion.getText());
 
         LEF.iniciarSimulacion(jCBescenario.getSelectedItem().toString(), Integer.parseInt(jCBpisoascensor.getSelectedItem().toString()), tiempoSimulacion);
-
+        jTAresultados.setText("");
+        jTAresultados.setText(LEF.mostrarLEF());
     }//GEN-LAST:event_jBiniciarsimulacionActionPerformed
     
     private void jCBescenarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBescenarioActionPerformed
